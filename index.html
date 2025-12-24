@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Para Karine ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#b3e5fc,#e1f5fe); /* azul claro */
+    text-align:center;
+    overflow:hidden;
+}
+#mensagem{
+    padding:60px 20px;
+    font-size:1.6em;
+}
+#slideshow,#coracao,#botao{
+    display:none;
+}
+#slideshow img{
+    max-width:80vw;
+    max-height:80vh;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    animation:fadeZoom 3s;
+}
+@keyframes fadeZoom{
+    from{opacity:0; transform:scale(0.95)}
+    to{opacity:1; transform:scale(1)}
+}
+canvas{
+    display:block;
+    margin:20px auto;
+}
+#botao button{
+    font-size:1.5em;
+    padding:18px 40px;
+    border:none;
+    border-radius:50px;
+    background:#1976d2;
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- MÚSICA -->
+<audio id="musica" loop>
+    <source src="perfect.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MENSAGEM -->
+<div id="mensagem">
+    <p>
+        💙✨ <strong>Karine Seixas</strong>, desde que você entrou na minha vida,
+        tudo ganhou mais cor, mais sentido e mais amor. 💕<br><br>
+        Obrigado por você me incentivar a ser uma pessoa cada vez melhor,
+        por acreditar em mim e caminhar ao meu lado. 🌹
+        Cada momento com você é um presente, e cada segundo juntos
+        faz tudo valer a pena. 💫❤️
+    </p>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="slideshow">
+    <img id="slide" src="foto1.png">
+</div>
+
+<!-- CORAÇÃO -->
+<div id="coracao">
+    <h2>Até a matemática explica o que eu sinto ❤️</h2>
+    <p>x = 16 sen³(t)</p>
+    <p>y = 13 cos(t) − 5 cos(2t) − 2 cos(3t) − cos(4t)</p>
+    <canvas id="canvas" width="400" height="400"></canvas>
+</div>
+
+<!-- BOTÃO FINAL -->
+<div id="botao">
+    <button>🎄 Feliz Natal 🎄</button>
+</div>
+
+<script>
+const fotos=["foto1.png","foto2.png","foto3.png","foto4.png","foto5.png"];
+let i=0;
+
+// força início da música (política do navegador)
+window.addEventListener('click',()=>{
+    document.getElementById('musica').play();
+},{once:true});
+
+setTimeout(iniciarSlideshow,7000);
+
+function iniciarSlideshow(){
+    mensagem.style.display='none';
+    slideshow.style.display='block';
+    document.getElementById('musica').play();
+
+    const intervalo=setInterval(()=>{
+        slide.src=fotos[i];
+        i++;
+        if(i>=fotos.length){
+            clearInterval(intervalo);
+            setTimeout(finalizar,2000);
+        }
+    },3500);
+}
+
+function finalizar(){
+    slideshow.style.display='none';
+    coracao.style.display='block';
+    desenharCoracaoAnimado();
+    setTimeout(()=>botao.style.display='block',4000);
+}
+
+function desenharCoracaoAnimado(){
+    const ctx=canvas.getContext('2d');
+    ctx.translate(200,200);
+    ctx.scale(10,-10);
+    let t=0;
+    ctx.beginPath();
+
+    const anim=setInterval(()=>{
+        const x=16*Math.pow(Math.sin(t),3);
+        const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+        ctx.lineTo(x,y);
+        ctx.strokeStyle='#d32f2f';
+        ctx.lineWidth=0.35;
+        ctx.stroke();
+        t+=0.02;
+        if(t>Math.PI*2){
+            clearInterval(anim);
+            ctx.scale(1,-1);
+            ctx.font='4px Arial';
+            ctx.fillStyle='#0d47a1';
+            ctx.textAlign='center';
+            ctx.fillText('Karine ❤️ Juan',0,-2);
+        }
+    },20);
+}
+</script>
+
+</body>
+</html>
